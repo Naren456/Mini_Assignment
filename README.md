@@ -1,72 +1,97 @@
-# StapuBox OTP Mini-Assignment
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-This project implements a 3-screen React Native flow for mobile number login via OTP, integrated with the StapuBox API.
+# Getting Started
 
-## 🚀 Features
+> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
 
-- **Screen 1: Login**
-  - Modern, premium UI with a dark theme.
-  - 10-digit Indian mobile number validation.
-  - API integration to send OTP.
-- **Screen 2: Verify OTP**
-  - Custom 4-digit OTP input with auto-focus and auto-next logic.
-  - **Auto-read SMS** for Android using the SMS Retriever API.
-  - **Auto-submit** once the 4th digit is filled.
-  - 60-second cooldown timer for "Resend OTP".
-  - "Change number" link to return to the login screen.
-- **Screen 3: Success**
-  - Clean success state with a checkmark and welcome message.
+## Step 1: Start Metro
 
-## 🛠️ Tech Stack
+First, you will need to run **Metro**, the JavaScript build tool for React Native.
 
-- **React Native** (v0.83.1)
-- **TypeScript**
-- **React Navigation** (Stack)
-- **Native Modules**: `react-native-sms-retriever` for Android SMS auto-reading.
+To start the Metro dev server, run the following command from the root of your React Native project:
 
-## 📦 Setup & Run
+```sh
+# Using npm
+npm start
 
-### Prerequisites
-- Node.js (v20+)
-- React Native Environment Setup for Android/iOS.
-
-### Installation
-1. Install dependencies:
-   ```sh
-   npm install
-   ```
-2. (iOS only) Install pods:
-   ```sh
-   cd ios && pod install && cd ..
-   ```
-
-### Running the App
-- **Android**:
-  ```sh
-  npm run android
-  ```
-- **iOS**:
-  ```sh
-  npm run ios
-  ```
-
-## 🔌 API Configuration
-
-The API settings are located in `src/api/config.ts`. If you have a different API token, please update it there.
-
-```typescript
-export const API_CONFIG = {
-  BASE_URL: 'https://stapubox.com/trial',
-  TOKEN: 'your_token_here',
-};
+# OR using Yarn
+yarn start
 ```
 
-## 📝 Design Decisions
+## Step 2: Build and run your app
 
-- **Premium UI**: Used a deep dark theme (`#0F0F10`) with vibrant blue highlights (`#007AFF`) and consistent spacing/typography for a high-end sports UX feel.
-- **Performance**: Used functional components with hooks and optimized re-renders for the custom OTP inputs.
-- **Error Handling**: Implemented robust error catching for all API calls with user-friendly alerts.
+With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
 
-## ⚠️ Known Issues / Limitations
-- SMS Auto-read is Android-exclusive as per the SMS Retriever API.
-- The `X-Api-Token` should be kept secure; for this assignment, it's defined in the code for easy demonstration.
+### Android
+
+```sh
+# Using npm
+npm run android
+
+# OR using Yarn
+yarn android
+```
+
+### iOS
+
+For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+
+The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+
+```sh
+bundle install
+```
+
+Then, and every time you update your native dependencies, run:
+
+```sh
+bundle exec pod install
+```
+
+For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+
+```sh
+# Using npm
+npm run ios
+
+# OR using Yarn
+yarn ios
+```
+
+If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+
+This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+
+## Step 3: Modify your app
+
+Now that you have successfully run the app, let's make changes!
+
+Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+
+When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+
+- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
+- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+
+## Congratulations! :tada:
+
+You've successfully run and modified your React Native App. :partying_face:
+
+### Now what?
+
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+
+# Troubleshooting
+
+If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+# Learn More
+
+To learn more about React Native, take a look at the following resources:
+
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
