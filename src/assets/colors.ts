@@ -5,7 +5,6 @@ export const Colors = {
   textPrimary: '#FFFFFF',
   textSecondary: '#4B4B4B',
   link: '#2398FE',
-  card: '#1C1C1E',
   border: '#FFFFFF',
   borderEmpty: '#FFFFFF33',
   buttonDisabled: '#FFFFFF0A',

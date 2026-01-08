@@ -1,35 +1,52 @@
 import { API_CONFIG } from './config';
 
+const request = async (endpoint: string, options: any = {}) => {
+  const url = endpoint.startsWith('http') ? endpoint : `${API_CONFIG.BASE_URL}${endpoint}`;
+  
+  const defaultHeaders = {
+    'Content-Type': 'application/json',
+    'X-Api-Token': API_CONFIG.TOKEN,
+  };
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      const errorMsg = data.message || `Error: ${response.status}`;
+      throw new Error(errorMsg);
+    }
+
+    return data;
+  } catch (error: any) {
+    if (error.message === 'Network request failed') {
+      throw new Error('Network error. Please check your internet connection.');
+    }
+    throw error;
+  }
+};
+
 export const apiService = {
-  sendOtp: async (mobile: string) => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/sendOtp`, {
+  sendOtp: (mobile: string) => 
+    request('/sendOtp', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Api-Token': API_CONFIG.TOKEN,
-      },
       body: JSON.stringify({ mobile }),
-    });
-    return response.json();
-  },
+    }),
 
-  resendOtp: async (mobile: string) => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/resendOtp?mobile=${mobile}`, {
+  resendOtp: (mobile: string) => 
+    request(`/resendOtp?mobile=${mobile}`, {
       method: 'POST',
-      headers: {
-        'X-Api-Token': API_CONFIG.TOKEN,
-      },
-    });
-    return response.json();
-  },
+    }),
 
-  verifyOtp: async (mobile: string, otp: string) => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/verifyOtp?mobile=${mobile}&otp=${otp}`, {
+  verifyOtp: (mobile: string, otp: string) => 
+    request(`/verifyOtp?mobile=${mobile}&otp=${otp}`, {
       method: 'POST',
-      headers: {
-        'X-Api-Token': API_CONFIG.TOKEN,
-      },
-    });
-    return response.json();
-  },
+    }),
 };
