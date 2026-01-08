@@ -17,6 +17,7 @@ import Colors from '../assets/colors';
 const LoginScreen = () => {
   const [mobile, setMobile] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigation = useNavigation<any>();
 
   React.useEffect(() => {
@@ -38,7 +39,7 @@ const LoginScreen = () => {
 
   const handleSendOtp = async () => {
     if (!mobile || mobile.length !== 10) {
-      Alert.alert('Error', 'Please enter a valid 10-digit mobile number');
+      setError('Please enter a valid 10-digit mobile number');
       return;
     }
 
@@ -48,10 +49,10 @@ const LoginScreen = () => {
       if (response.status === 'success' || response.otp) {
         navigation.navigate('Otp', { mobile });
       } else {
-        Alert.alert('Error', response.message || 'Failed to send OTP');
+        setError(response.message || 'Failed to send OTP');
       }
     } catch (error) {
-      Alert.alert('Error', 'Something went wrong. Please try again.');
+      setError('Something went wrong. Please try again.');
       console.error(error);
     } finally {
       setLoading(false);
@@ -80,10 +81,15 @@ const LoginScreen = () => {
               keyboardType="number-pad"
               maxLength={10}
               value={mobile}
-              onChangeText={setMobile}
+              onChangeText={(text) => {
+                setMobile(text);
+                if (error) setError('');
+              }}
               style={styles.inputStyle}
             />
           </View>
+          
+          {error ? <Text style={styles.errorText}>{error}</Text> : null}
           
           <AppButton 
             title="Send OTP" 
@@ -186,5 +192,12 @@ const styles = StyleSheet.create({
     color: Colors.link, 
     fontSize: 12,     
     fontWeight: '600', 
+  },
+  errorText: {
+    color: Colors.error, // System red
+    fontSize: 12,
+    marginTop: -16,
+    marginBottom: 16,
+    fontWeight: '500',
   }
 });
