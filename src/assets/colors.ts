@@ -10,6 +10,13 @@ export const Colors = {
   borderEmpty: '#FFFFFF33',
   buttonDisabled: '#FFFFFF0A',
   black: '#000000',
+  strokeUnalive: '#A0A0A0B3',
+  error: '#FF3B30',
+  dropdownBg: '#FFFFFF',
+  dropdownBorder: '#F0F0F0',
+  dropdownSelectedBg: '#F8F9FA',
+  dropdownText: '#333333',
+  dropdownPlaceholder: 'rgba(255, 255, 255, 0.4)',
 };
 
 export default Colors;
