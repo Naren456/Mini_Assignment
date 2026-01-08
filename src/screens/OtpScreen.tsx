@@ -77,7 +77,7 @@ const OtpScreen = () => {
   };
 
   const handleOtpChange = (value: string, index: number) => {
-    // Check if pasted/suggested a 4-digit code
+    
     if (value.length === 4 && /^\d+$/.test(value)) {
       const otpArray = value.split('');
       setOtp(otpArray);
@@ -86,7 +86,7 @@ const OtpScreen = () => {
       return;
     }
 
-    // Only accept numeric single digit input for normal typing
+    
     if (value && !/^\d+$/.test(value)) return;
 
     const newOtp = [...otp];
@@ -94,12 +94,12 @@ const OtpScreen = () => {
     setOtp(newOtp);
     if (error) setError('');
 
-    // Auto focus next input if digit entered
+    
     if (value && index < 3) {
       inputRefs[index + 1].current?.focus();
     }
 
-    // Auto verify when all 4 digits are present
+    
     const combinedOtp = newOtp.join('');
     if (combinedOtp.length === 4) {
       handleVerify(combinedOtp);
@@ -122,12 +122,11 @@ const OtpScreen = () => {
         navigation.navigate('Register');
       } else {
         setError(response.message || 'Wrong OTP Entered');
-        // Clear OTP on failure
         setOtp(['', '', '', '']);
         inputRefs[0].current?.focus();
       }
-    } catch (error) {
-      setError('Verification failed. Please try again.');
+    } catch (error: any) {
+      setError(error.message || 'Verification failed. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -149,8 +148,8 @@ const OtpScreen = () => {
       } else {
         setError(response.message || 'Failed to resend OTP');
       }
-    } catch (error) {
-      setError('Failed to resend OTP. Please try again.');
+    } catch (error: any) {
+      setError(error.message || 'Failed to resend OTP. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -167,8 +166,9 @@ const OtpScreen = () => {
       />
 
       <View style={styles.content}>
-        <Text style={styles.subHeader}>Enter 4 digit OTP sent to your phone number</Text>
-
+        <View style={styles.headerContainer}>
+        <Text style={styles.subHeader}>Enter 4 digit OTP sent to your phone{"\n"}number</Text>
+        </View>
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (
             <TextInput
@@ -182,7 +182,7 @@ const OtpScreen = () => {
               onChangeText={(value) => handleOtpChange(value, index)}
               onKeyPress={(e) => handleKeyPress(e, index)}
               keyboardType="number-pad"
-              maxLength={index === 0 ? 4 : 1} // Support pasting in first field
+              maxLength={index === 0 ? 4 : 1} 
               selectionColor={Colors.secondary}
               autoFocus={index === 0}
               autoComplete="one-time-code"
@@ -243,27 +243,29 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginRight: 40, 
   },
-  content: {
-    paddingHorizontal: 24,
+  headerContainer:{
+    marginTop: 20,
+    marginBottom: 32,
   },
   subHeader: {
     fontSize: 20,
     fontWeight: '600',
     color: Colors.textPrimary,
-    marginTop: 48,
-    marginBottom: 32,
-    lineHeight: 30,
+    lineHeight: 32,
     width: '100%', 
+  },
+  content: {
+    paddingHorizontal: 18, 
   },
   otpContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginBottom: 32,
-    gap: 10, // Match mockup gap
+    gap: 12, 
   },
   otpInput: {
-    width: 53, // Match mockup dimensions (approx)
-    height: 56,
+    width: 50, 
+    height: 50,
     borderWidth: 1,
     borderColor: Colors.borderEmpty,
     borderRadius: 8,

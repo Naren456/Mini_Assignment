@@ -28,7 +28,6 @@ const LoginScreen = () => {
     try {
       const phoneNumber = await SmsRetriever.requestPhoneNumber();
       if (phoneNumber) {
-        // Remove country code if present (e.g., +91)
         const cleanNumber = phoneNumber.replace(/[^0-9]/g, '').slice(-10);
         setMobile(cleanNumber);
       }
@@ -51,13 +50,11 @@ const LoginScreen = () => {
       } else {
         setError(response.message || 'Failed to send OTP');
       }
-    } catch (error) {
-      setError('Something went wrong. Please try again.');
-      console.error(error);
+    } catch (error: any) {
+      setError(error.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
     }
-    //   navigation.navigate('Otp', { mobile });
   };
 
   return (
@@ -128,7 +125,7 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   headerContainer :{
-    marginBottom :48,
+    marginBottom :35,
     alignItems:'center'
   },
   header : {
@@ -194,7 +191,7 @@ const styles = StyleSheet.create({
     fontWeight: '600', 
   },
   errorText: {
-    color: Colors.error, // System red
+    color: Colors.error, 
     fontSize: 12,
     marginTop: -16,
     marginBottom: 16,

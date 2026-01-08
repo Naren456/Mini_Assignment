@@ -11,11 +11,13 @@ import Colors from '../assets/colors';
 
 interface AppInputProps extends TextInputProps {
   label?: string;
+  error?: string;
   containerStyle?: ViewStyle;
 }
 
 const AppInput: React.FC<AppInputProps> = ({
   label,
+  error,
   containerStyle,
   style,
   ...props
@@ -26,13 +28,14 @@ const AppInput: React.FC<AppInputProps> = ({
       <TextInput
         style={[
           styles.input, 
-          { borderColor: props.value ? Colors.border : Colors.borderEmpty },
+          { borderColor: error ? Colors.error : (props.value ? Colors.border : Colors.borderEmpty) },
           style
         ]}
-        placeholderTextColor={Colors.textSecondary}
+        placeholderTextColor={Colors.dropdownPlaceholder}
         selectionColor={Colors.secondary}
         {...props}
       />
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 };
@@ -51,11 +54,16 @@ const styles = StyleSheet.create({
   input: {
     height: 56,
     borderWidth: 1,
-    borderColor: Colors.border,
     borderRadius: 12,
     paddingHorizontal: 16,
     color: Colors.textPrimary,
     fontSize: 16,
+  },
+  errorText: {
+    color: Colors.error,
+    fontSize: 12,
+    marginTop: 4,
+    fontWeight: '400',
   },
 });
 

@@ -16,6 +16,7 @@ interface AppDropdownProps {
   onSelect: (value: string) => void;
   placeholder?: string;
   style?: any;
+  error?: string;
 }
 
 const AppDropdown: React.FC<AppDropdownProps> = ({
@@ -25,6 +26,7 @@ const AppDropdown: React.FC<AppDropdownProps> = ({
   onSelect,
   placeholder = 'Select option',
   style,
+  error,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -35,7 +37,7 @@ const AppDropdown: React.FC<AppDropdownProps> = ({
       <TouchableOpacity
         style={[
           styles.dropdownButton,
-          { borderColor: selectedValue ? Colors.border : Colors.borderEmpty },
+          { borderColor: error ? Colors.error : (selectedValue ? Colors.border : Colors.borderEmpty) },
           style
         ]}
         onPress={() => setIsOpen(!isOpen)}
@@ -49,6 +51,8 @@ const AppDropdown: React.FC<AppDropdownProps> = ({
         </Text>
         <Text style={styles.arrow}>▼</Text>
       </TouchableOpacity>
+      
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
       
       {isOpen && (
         <View style={styles.optionsContainer}>
@@ -158,6 +162,12 @@ const styles = StyleSheet.create({
   selectedOptionText: {
     color: Colors.primary,
     fontWeight: '600',
+  },
+  errorText: {
+    color: Colors.error,
+    fontSize: 12,
+    marginTop: 4,
+    fontWeight: '400',
   },
 });
 
